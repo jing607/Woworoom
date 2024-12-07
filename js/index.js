@@ -151,6 +151,7 @@ async function addCartItem(productId, quantity = 1) {
                     "quantity": existingCartItem.quantity + quantity
                 }
             });
+            showToast("商品數量已更新");
         } else {
             const response = await axios.post(`${baseUrl}/api/livejs/v1/customer/${apiPath}/carts`, {
                 data: {
@@ -158,28 +159,14 @@ async function addCartItem(productId, quantity = 1) {
                     "quantity": quantity
                 }
             });
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: false,
-                didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "已加入購物車"
-            });
+            showToast("已加入購物車");
         }
         await getCartList();
     } catch(error) {
         handleError('加入購物車失敗', error);
     }   
 }
-addCartItem();
+
 
 // Add product to cart
 productCardWrap.addEventListener('click', async (event) => {
@@ -445,6 +432,25 @@ orderInfoForm.addEventListener('submit', async (event) => {
 
 
 // ===============================
+
+function showToast(message) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    Toast.fire({
+        icon: "success",
+        title: message
+    });
+}
 
 function handleError(message, error) {
     console.error(message, error);
