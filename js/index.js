@@ -27,7 +27,6 @@ async function getProductList() {
     try {
         const response = await axios.get(`${baseUrl}/api/livejs/v1/customer/${apiPath}/products`);
         productList = response.data.products;
-        console.log('取得產品列表',productList);
         renderProductList();
         
     } catch (error) {
@@ -74,7 +73,6 @@ async function getCartList() {
     try {
         shoppingCartBody.classList.add('loading');
         const response = await axios.get(`${baseUrl}/api/livejs/v1/customer/${apiPath}/carts`);
-        console.log('cartlist:', response.data);
         cartList = response.data.carts;
         cartTotalPrice = response.data.finalTotal;
         renderCart();
@@ -173,7 +171,6 @@ productCardWrap.addEventListener('click', async (event) => {
     event.preventDefault();
     if(event.target.classList.contains('addCardBtn')) {
         const productId = event.target.dataset.id;
-        console.log('add productId:', productId);
         await addCartItem(productId);
         await getCartList();
     }
@@ -306,7 +303,6 @@ async function confirmDelete(message) {
         confirmButtonText: '確定',
         cancelButtonText: '取消刪除',
     })
-    console.log('result:', result);
     return result.isConfirmed;
 }
 
@@ -402,8 +398,8 @@ async function createOrder(formData) {
                 }
             }
         })
-        
         renderCart();
+        orderInfoForm.reset();
 
         await Swal.fire({
             icon: 'success',
