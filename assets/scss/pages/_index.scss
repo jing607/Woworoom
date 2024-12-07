@@ -52,6 +52,11 @@ table {
   border-spacing: 0;
 }
 
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
 *, *::after, *::before {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -71,6 +76,12 @@ img {
 body {
   font-family: 'Noto Sans', sans-serif;
   font-weight: bold;
+}
+
+.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .wrap {
